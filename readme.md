@@ -1,4 +1,4 @@
-## ⚠️ Not maintained anymore as I moved to niri
+## ⚠️  Maintained by Luna
 
 # Dotfiles for Hyprland on Arch Linux
 
@@ -64,7 +64,7 @@ Quick info:
 ### Automatic installer
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Maciejonos/dotfiles/master/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Luna4781/dotfiles/master/setup.sh | bash
 ```
 
 **⚠️ Important Notes:**
