@@ -33,12 +33,12 @@ post_hook = "theme-set tinte {path}"
 
 [templates.ghostty]
 input_path = "$TINTE_TEMPLATES/ghostty.conf"
-output_path = "$TINTE_THEMES_DIR/ghostty-colors"
+output_path = "$TINTE_THEMES_DIR/ghostty.conf"
 post_hook = "killall -SIGUSR2 ghostty"
 
 [templates.waybar]
 input_path = "$TINTE_TEMPLATES/waybar.css"
-output_path = "$TINTE_THEMES_DIR/waybar-colors.css"
+output_path = "$TINTE_THEMES_DIR/waybar.css"
 
 [templates.mako]
 input_path = "$TINTE_TEMPLATES/mako.ini"
@@ -47,15 +47,19 @@ post_hook = "makoctl reload"
 
 [templates.hyprland]
 input_path = "$TINTE_TEMPLATES/hyprland.conf"
-output_path = "$TINTE_THEMES_DIR/hyprland-colors.conf"
+output_path = "$TINTE_THEMES_DIR/hyprland.conf"
+
+[templates.hyprlock]
+input_path = "$TINTE_TEMPLATES/hyprlock.conf"
+output_path = "$TINTE_THEMES_DIR/hyprlock.conf"
 
 [templates.walker]
 input_path = "$TINTE_TEMPLATES/walker.css"
-output_path = "$TINTE_THEMES_DIR/walker-colors.css"
+output_path = "$TINTE_THEMES_DIR/walker.css"
 
 [templates.swayosd]
 input_path = "$TINTE_TEMPLATES/swayosd.css"
-output_path = "$TINTE_THEMES_DIR/swayosd-colors.css"
+output_path = "$TINTE_THEMES_DIR/swayosd.css"
 
 [templates.btop]
 input_path = "$TINTE_TEMPLATES/btop.theme"
@@ -64,6 +68,10 @@ output_path = "$TINTE_THEMES_DIR/btop.theme"
 [templates.gtk]
 input_path = "$TINTE_TEMPLATES/gtk.css"
 output_path = "$TINTE_THEMES_DIR/gtk.css"
+
+[templates.neovim]
+input_path = "$TINTE_TEMPLATES/neovim.lua"
+output_path = "$TINTE_THEMES_DIR/neovim.lua"
 EOF
 
 # Start swww and set current wallpaper
