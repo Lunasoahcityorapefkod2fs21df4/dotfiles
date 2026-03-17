@@ -36,7 +36,7 @@ _ensureAURHelper() {
     return 0
   fi
 
-  log_info "No AUR helper detected. Installing yay..."
+  log_info "No AUR helper detected. Installing paru..."
   
   if ! is_installed "base-devel"; then
     log_info "Installing base-devel..."
@@ -46,16 +46,21 @@ _ensureAURHelper() {
     log_info "Installing git..."
     sudo pacman --noconfirm -S git
   fi
+  if ! is_installed "rustup"; then
+    log_info "Installing rustup (required for paru)..."
+    sudo pacman --noconfirm -S rustup
+    rustup default stable
+  fi
 
-  log_info "Cloning yay from AUR..."
-  rm -rf /tmp/yay
-  git clone https://aur.archlinux.org/yay.git /tmp/yay
-  cd /tmp/yay
-  log_info "Building and installing yay (this may take a moment)..."
+  log_info "Cloning paru from AUR..."
+  rm -rf /tmp/paru
+  git clone https://aur.archlinux.org/paru.git /tmp/paru
+  cd /tmp/paru
+  log_info "Building and installing paru (this may take a moment)..."
   makepkg -si --noconfirm
   cd ~
-  rm -rf /tmp/yay
-  log_success "Yay installed successfully"
+  rm -rf /tmp/paru
+  log_success "Paru installed successfully"
 }
 
 _installPackages() {

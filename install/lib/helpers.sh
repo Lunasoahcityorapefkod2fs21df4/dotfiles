@@ -193,7 +193,9 @@ remove_path() {
 get_aur_helper() {
     if command -v paru &>/dev/null; then
         echo "paru"
-    else
+    elif command -v yay &>/dev/null; then
         echo "yay"
+    else
+        echo "paru" # Fallback/default expected behavior
     fi
 }
