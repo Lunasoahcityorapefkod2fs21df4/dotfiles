@@ -9,8 +9,13 @@ set_wallpaper() {
   local wallpaper="$1"
   ln -nsf "$wallpaper" "$CURRENT_BACKGROUND_LINK"
 
+  # Resolve symlinks — hyprpaper resolves during preload but matches literally,
+  # so we must pass the real path to avoid "no target" errors
+  local resolved_path
+  resolved_path=$(readlink -f "$CURRENT_BACKGROUND_LINK" 2>/dev/null || echo "$CURRENT_BACKGROUND_LINK")
+
   # Reload wallpaper on all monitors using hyprpaper IPC
-  hyprctl hyprpaper reload ",$CURRENT_BACKGROUND_LINK" 2>/dev/null || true
+  hyprctl hyprpaper reload ",${resolved_path}" 2>/dev/null || true
   log_success "Wallpaper set: $(basename "$wallpaper")"
 }
 

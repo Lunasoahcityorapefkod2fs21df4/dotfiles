@@ -37,8 +37,6 @@ log_success "Config copied!"
 # Fix Walker tilde expansion crash by hardcoding absolute path
 sed -i "s|additional_theme_location = \"~|additional_theme_location = \"$HOME|" "$HOME/.config/walker/config.toml"
 
-# Fix Hyprpaper tilde expansion crash
-sed -i "s|~|$HOME|g" "$HOME/.config/hypr/hyprpaper.conf"
 
 echo "@import url(\"file://$HOME/.local/share/dotfiles/current/theme/gtk.css\");" >"$HOME/.config/gtk-3.0/gtk.css"
 echo "@import url(\"file://$HOME/.local/share/dotfiles/current/theme/gtk.css\");" >"$HOME/.config/gtk-4.0/gtk.css"
