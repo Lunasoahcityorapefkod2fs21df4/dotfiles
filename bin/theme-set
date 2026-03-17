@@ -35,13 +35,25 @@ reload_apps() {
 apply_dynamic_theme() {
   local theme_name="$1"
   local wallpaper="$2"
+  local STATE_FILE="$HOME/.local/share/dotfiles/current/.dynamic-wallpaper"
 
   log_step "Applying ${theme_name^} theme"
 
   ln -nsf "$THEMES_DIR/$theme_name" "$CURRENT_THEME_LINK"
 
   if [[ -n "$wallpaper" ]]; then
+    # User provided a new wallpaper, save it to state
+    echo "$wallpaper" > "$STATE_FILE"
     set_wallpaper "$wallpaper"
+  else
+    # User just switched to the theme, try to restore the last wallpaper
+    if [[ -f "$STATE_FILE" ]]; then
+      local saved_wallpaper=$(cat "$STATE_FILE")
+      if [[ -f "$saved_wallpaper" ]]; then
+        log_info "Restoring last dynamic wallpaper"
+        set_wallpaper "$saved_wallpaper"
+      fi
+    fi
   fi
 
   reload_apps
