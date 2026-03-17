@@ -41,17 +41,51 @@ sed -i "s|additional_theme_location = \"~|additional_theme_location = \"$HOME|" 
 echo "@import url(\"file://$HOME/.local/share/dotfiles/current/theme/gtk.css\");" >"$HOME/.config/gtk-3.0/gtk.css"
 echo "@import url(\"file://$HOME/.local/share/dotfiles/current/theme/gtk.css\");" >"$HOME/.config/gtk-4.0/gtk.css"
 
+# Set up Tinte (dynamic color generator) config
 mkdir -p "$HOME/.config/tinte"
-[ -f "$HOME/.config/tinte/settings.json" ] && rm -f "$HOME/.config/tinte/settings.json"
-cat > "$HOME/.config/tinte/settings.json" << EOF
-{
-  "wallpaperFolder": "$HOME/Pictures/dotfiles-wallpapers",
-  "posthookScript": "theme-set",
-  "exportThemeLocation": "$HOME/.config/tinte/exported-themes",
-  "applyThemeLocation": "$HOME/.local/share/dotfiles/themes/tinte",
-  "colorBackend": "imagemagick",
-  "wallpaperBackend": "script"
-}
+rm -f "$HOME/.config/tinte/settings.json"  # Remove obsolete v1 config
+
+TINTE_THEMES_DIR="$HOME/.local/share/dotfiles/themes/tinte"
+TINTE_TEMPLATES="$DOTFILES_DIR/tinte-templates"
+
+cat > "$HOME/.config/tinte/config.toml" << EOF
+[config]
+wallpaper_cmd = "swww img {path} --transition-type fade --transition-duration 1"
+post_hook = "theme-set tinte {path}"
+
+[templates.ghostty]
+input_path = "$TINTE_TEMPLATES/ghostty.conf"
+output_path = "$TINTE_THEMES_DIR/ghostty-colors"
+post_hook = "killall -SIGUSR2 ghostty"
+
+[templates.waybar]
+input_path = "$TINTE_TEMPLATES/waybar.css"
+output_path = "$TINTE_THEMES_DIR/waybar-colors.css"
+
+[templates.mako]
+input_path = "$TINTE_TEMPLATES/mako.ini"
+output_path = "$TINTE_THEMES_DIR/mako.ini"
+post_hook = "makoctl reload"
+
+[templates.hyprland]
+input_path = "$TINTE_TEMPLATES/hyprland.conf"
+output_path = "$TINTE_THEMES_DIR/hyprland-colors.conf"
+
+[templates.walker]
+input_path = "$TINTE_TEMPLATES/walker.css"
+output_path = "$TINTE_THEMES_DIR/walker-colors.css"
+
+[templates.swayosd]
+input_path = "$TINTE_TEMPLATES/swayosd.css"
+output_path = "$TINTE_THEMES_DIR/swayosd-colors.css"
+
+[templates.btop]
+input_path = "$TINTE_TEMPLATES/btop.theme"
+output_path = "$TINTE_THEMES_DIR/btop.theme"
+
+[templates.gtk]
+input_path = "$TINTE_TEMPLATES/gtk.css"
+output_path = "$TINTE_THEMES_DIR/gtk.css"
 EOF
 
 log_success "Config copied!"
